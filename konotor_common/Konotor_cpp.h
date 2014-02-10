@@ -17,6 +17,7 @@ public:
     static void setUsername(char *userName);
     static void setUserIdentifier(char *userIdentifier);
     static void setUserMeta(char *key, char *value);
+    static void update();
     static int getUnreadCount();
     static void subscribeToUnreadCountChange(void (*callbackFunction) (void));
     static void unSubscribeToUnreadCountChange();

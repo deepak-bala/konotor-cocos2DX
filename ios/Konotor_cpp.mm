@@ -47,6 +47,11 @@ void KonotorCocos2dx::setUserMeta(char *key,char *value)
     [Konotor setCustomUserProperty:nsValue forKey:nsKey];
 }
 
+void KonotorCocos2dx::update()
+{
+    return;
+}
+
 void KonotorCocos2dx::subscribeToUnreadCountChange(void (*callbackFunction) (void))
 {
     if(unreadCountObserver)
