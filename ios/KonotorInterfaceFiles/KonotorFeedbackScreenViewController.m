@@ -81,6 +81,9 @@ static KonotorUIParameters* konotorUIParameters=nil;
         [headerView setTextColor:[UIColor whiteColor]];
         [headerView setTextAlignment:NSTextAlignmentCenter];
     }
+    if([konotorUIParameters titleTextColor]){
+        [headerView setTextColor:[konotorUIParameters titleTextColor]];
+    }
  
  /*   [headerView setBackgroundColor:KONOTOR_UIBUTTON_COLOR];
     [headerView setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:26.0]];
@@ -164,6 +167,11 @@ static KonotorUIParameters* konotorUIParameters=nil;
     [poweredByLabel setHidden:YES];
 #endif
     
+    if((!konotorUIParameters.showInputOptions)&&(!footerView.hidden)){
+        [messageTableView setFrame:CGRectMake(messageTableView.frame.origin.x, messageTableView.frame.origin.y, messageTableView.frame.size.width, messageTableView.frame.size.height+footerView.frame.size.height)];
+        [footerView setHidden:YES];
+    }
+    
     messagesView=[[KonotorConversationViewController alloc] init];
     messagesView.view=messageTableView;
     [messageTableView setDelegate:messagesView];
@@ -197,7 +205,8 @@ static KonotorUIParameters* konotorUIParameters=nil;
             [self.navigationItem setTitle:@"Feedback"];
 
 
-        self.navigationController.navigationBar.titleTextAttributes=[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor, [UIColor clearColor], UITextAttributeTextShadowColor,[NSValue valueWithUIOffset:UIOffsetMake(1, 1)], UITextAttributeTextShadowOffset,[UIFont fontWithName:@"HelveticaNeue-UltraLight" size:28.0],UITextAttributeFont,nil];
+      //  self.navigationController.navigationBar.titleTextAttributes=[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor, [UIColor clearColor], UITextAttributeTextShadowColor,[NSValue valueWithUIOffset:UIOffsetMake(1, 1)], UITextAttributeTextShadowOffset,[UIFont fontWithName:@"HelveticaNeue-UltraLight" size:28.0],UITextAttributeFont,nil];
+        
         
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -302,7 +311,7 @@ static KonotorUIParameters* konotorUIParameters=nil;
 
 @implementation KonotorUIParameters
 
-@synthesize disableTransparentOverlay,headerViewColor,backgroundViewColor,voiceInputEnabled,imageInputEnabled,closeButtonImage,toastStyle,autoShowTextInput,titleText,toastBGColor,toastTextColor;
+@synthesize disableTransparentOverlay,headerViewColor,backgroundViewColor,voiceInputEnabled,imageInputEnabled,closeButtonImage,toastStyle,autoShowTextInput,titleText,toastBGColor,toastTextColor,textInputButtonImage,titleTextColor,showInputOptions;
 
 + (KonotorUIParameters*) sharedInstance
 {
@@ -313,6 +322,10 @@ static KonotorUIParameters* konotorUIParameters=nil;
         konotorUIParameters.toastStyle=KonotorToastStyleDefault;
         konotorUIParameters.toastBGColor=[UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
         konotorUIParameters.toastTextColor=[UIColor whiteColor];
+        konotorUIParameters.titleTextColor=nil;
+        konotorUIParameters.showInputOptions=YES;
+        konotorUIParameters.textInputButtonImage=nil;
+
     }
     return konotorUIParameters;
 }
