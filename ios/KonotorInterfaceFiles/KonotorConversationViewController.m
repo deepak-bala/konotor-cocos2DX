@@ -19,7 +19,9 @@ static BOOL showingAlert=NO;
 static NSString* copiedText=@"";
 static NSData* copiedContent=nil;
 static NSString* copiedMessageId=@"";
+#if KONOTOR_MESSAGE_SHARE_SUPPORT
 static enum KonotorMessageType copiedMessageType=KonotorMessageTypeText;
+#endif
 static NSString* copiedMimeType=@"";
 
 NSMutableDictionary *messageHeights=nil;
@@ -1291,6 +1293,7 @@ UIImage* meImage=nil,*otherImage=nil,*sendingImage=nil,*sentImage=nil;
     
 }
 
+#if KONOTOR_MESSAGE_SHARE_SUPPORT
 -(void) showMessageActions:(id) sender
 {
     UIAlertView* alertdlg=[[UIAlertView alloc] initWithTitle:@"Share" message:@"Share this message via " delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Email", nil];
@@ -1315,6 +1318,7 @@ UIImage* meImage=nil,*otherImage=nil,*sendingImage=nil,*sentImage=nil;
     }
     [alertdlg show];
 }
+#endif
 
 #if KONOTOR_MESSAGE_SHARE_SUPPORT
 
