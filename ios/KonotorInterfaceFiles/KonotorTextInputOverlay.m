@@ -45,25 +45,18 @@ static BOOL firstWordOnLine=YES;
 - (void) showInputView
 {
     
-    textInputBox=[[UIView alloc] initWithFrame:CGRectMake(0, window.frame.size.height-15-20-44,  window.frame.size.width, 44)];
+    textInputBox=[[UIView alloc] initWithFrame:CGRectMake(0, window.frame.size.height-44,  window.frame.size.width, 44)];
     [textInputBox setBackgroundColor:[UIColor colorWithRed:0.97 green:0.97 blue:0.97 alpha:1.0]];
     textInputBox.layer.shadowColor=[[UIColor lightGrayColor] CGColor];
     textInputBox.layer.shadowOffset=CGSizeMake(1.0, 1.0);
     textInputBox.layer.shadowRadius=1.0;
     
     KonotorUITextView* input;
-#if    (KONOTOR_BUTTONFORSEND==1)
-    if([KonotorUtility KonotorIsInterfaceLandscape:(((KonotorFeedbackScreen*)[KonotorFeedbackScreen sharedInstance]).conversationViewController)])
-        input=[[KonotorUITextView alloc] initWithFrame:CGRectMake(5+35, 6, window.frame.size.height-30-10-50-35+10+29, 44-6-6)];
-    else
-        input=[[KonotorUITextView alloc] initWithFrame:CGRectMake(5+35, 6, window.frame.size.width-30-10-50-35+10+29, 44-6-6)];
 
-#else
     if([KonotorUtility KonotorIsInterfaceLandscape:(((KonotorFeedbackScreen*)[KonotorFeedbackScreen sharedInstance]).conversationViewController)])
         input=[[KonotorUITextView alloc] initWithFrame:CGRectMake(5+35, 6, window.frame.size.height-30-10-50-35+10+15, 44-6-6)];
     else
         input=[[KonotorUITextView alloc] initWithFrame:CGRectMake(5+35, 6, window.frame.size.width-30-10-50-35+10+15, 44-6-6)];
-#endif
 
     input.layer.borderWidth=1.0;
     input.layer.borderColor=[[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0] CGColor];
@@ -99,15 +92,6 @@ static BOOL firstWordOnLine=YES;
 
     
     UIButton *sendButton=[UIButton buttonWithType:UIButtonTypeCustom];
-#if (KONOTOR_BUTTONFORSEND==1)
-    if([KonotorUtility KonotorIsInterfaceLandscape:(((KonotorFeedbackScreen*)[KonotorFeedbackScreen sharedInstance]).conversationViewController)])
-        [sendButton setFrame:CGRectMake(5+35+window.frame.size.height-30-10-50-35+5+10+29, 4, 36, 36)];
-    else
-        [sendButton setFrame:CGRectMake(5+35+window.frame.size.width-30-10-50-35+5+10+29, 4, 36, 36)];
-    
-    
-    [sendButton setImage:[UIImage imageNamed:@"konotor_send.png"] forState:UIControlStateNormal];
-#else
     
     if([KonotorUtility KonotorIsInterfaceLandscape:(((KonotorFeedbackScreen*)[KonotorFeedbackScreen sharedInstance]).conversationViewController)])
         [sendButton setFrame:CGRectMake(5+35+window.frame.size.height-30-10-50-35+5+10+15, 5, 50, 34)];
@@ -115,11 +99,10 @@ static BOOL firstWordOnLine=YES;
         [sendButton setFrame:CGRectMake(5+35+window.frame.size.width-30-10-50-35+5+10+15, 5, 50, 34)];
 
     
-    [sendButton setTitleColor:KONOTOR_UIBUTTON_COLOR forState:UIControlStateNormal];
+    [sendButton setTitleColor:(([[KonotorUIParameters sharedInstance] sendButtonColor]==nil)?KONOTOR_UIBUTTON_COLOR:[[KonotorUIParameters sharedInstance] sendButtonColor]) forState:UIControlStateNormal];
     [sendButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
     sendButton.enabled=NO;
     [sendButton setTitle:@"Send" forState:UIControlStateNormal];
-#endif
     
     [sendButton setTag:KONOTOR_TEXTINPUT_SENDBUTTON_TAG];
 
@@ -172,18 +155,6 @@ static BOOL firstWordOnLine=YES;
     
     UIButton* sendButton = (UIButton*)[self.textInputBox viewWithTag:KONOTOR_TEXTINPUT_SENDBUTTON_TAG];
     
-#if (KONOTOR_BUTTONFORSEND==1)
-    if([KonotorUtility KonotorIsInterfaceLandscape:(((KonotorFeedbackScreen*)[KonotorFeedbackScreen sharedInstance]).conversationViewController)])
-        [sendButton setFrame:CGRectMake(5+35+self.window.frame.size.height-30-10-50-35+5+10+29, 5, 36, 36)];
-    else
-        [sendButton setFrame:CGRectMake(5+35+self.window.frame.size.width-30-10-50-35+5+10+29, 5, 36, 36)];
-    
-    float txtWidth;
-    if([KonotorUtility KonotorIsInterfaceLandscape:(((KonotorFeedbackScreen*)[KonotorFeedbackScreen sharedInstance]).conversationViewController.messagesView)])
-        txtWidth=self.window.frame.size.height-30-10-50-35+10+29;
-    else
-        txtWidth=self.window.frame.size.width-30-10-50-35+10+29;
-#else
     if([KonotorUtility KonotorIsInterfaceLandscape:(((KonotorFeedbackScreen*)[KonotorFeedbackScreen sharedInstance]).conversationViewController)])
         [sendButton setFrame:CGRectMake(5+35+self.window.frame.size.height-30-10-50-35+5+10+15, 5, 50, 34)];
     else
@@ -194,7 +165,6 @@ static BOOL firstWordOnLine=YES;
         txtWidth=self.window.frame.size.height-30-10-50-35+10+15;
     else
         txtWidth=self.window.frame.size.width-30-10-50-35+10+15;
-#endif
     
     CGSize txtSize;
     
