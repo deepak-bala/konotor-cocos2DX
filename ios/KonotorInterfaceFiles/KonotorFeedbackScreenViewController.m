@@ -154,11 +154,14 @@ static KonotorUIParameters* konotorUIParameters=nil;
     [input setFrame:CGRectMake(input.frame.origin.x-40, input.frame.origin.y, input.frame.size.width+40, input.frame.size.height)];
     }
 
-#if (KONOTOR_DONTSHOWPOWEREDBY==1)
-    [messageTableView setFrame:CGRectMake(messageTableView.frame.origin.x, messageTableView.frame.origin.y, messageTableView.frame.size.width, messageTableView.frame.size.height+18)];
-    [footerView setFrame:CGRectMake(footerView.frame.origin.x, footerView.frame.origin.y+18, footerView.frame.size.width, footerView.frame.size.height)];
-    [poweredByLabel setHidden:YES];
-#endif
+//#if (KONOTOR_DONTSHOWPOWEREDBY==1)
+    if([Konotor isPoweredByHidden])
+    {
+        [messageTableView setFrame:CGRectMake(messageTableView.frame.origin.x, messageTableView.frame.origin.y, messageTableView.frame.size.width, messageTableView.frame.size.height+14)];
+        [footerView setFrame:CGRectMake(footerView.frame.origin.x, footerView.frame.origin.y+14, footerView.frame.size.width, footerView.frame.size.height)];
+        [poweredByLabel setHidden:YES];
+    }
+//#endif
     
     if((!konotorUIParameters.showInputOptions)&&(!footerView.hidden)){
         [messageTableView setFrame:CGRectMake(messageTableView.frame.origin.x, messageTableView.frame.origin.y, messageTableView.frame.size.width, messageTableView.frame.size.height+footerView.frame.size.height)];
@@ -341,7 +344,7 @@ static KonotorUIParameters* konotorUIParameters=nil;
 
 @implementation KonotorUIParameters
 
-@synthesize disableTransparentOverlay,headerViewColor,backgroundViewColor,voiceInputEnabled,imageInputEnabled,closeButtonImage,toastStyle,autoShowTextInput,titleText,toastBGColor,toastTextColor,textInputButtonImage,titleTextColor,showInputOptions,noPhotoOption,titleTextFont,allowSendingEmptyMessage,dontShowLoadingAnimation,sendButtonColor,doneButtonColor,userChatBubble,userTextColor,otherChatBubble,otherTextColor,overlayTransitionStyle,inputHintText;
+@synthesize disableTransparentOverlay,headerViewColor,backgroundViewColor,voiceInputEnabled,imageInputEnabled,closeButtonImage,toastStyle,autoShowTextInput,titleText,toastBGColor,toastTextColor,textInputButtonImage,titleTextColor,showInputOptions,noPhotoOption,titleTextFont,allowSendingEmptyMessage,dontShowLoadingAnimation,sendButtonColor,doneButtonColor,userChatBubble,userTextColor,otherChatBubble,otherTextColor,overlayTransitionStyle,inputHintText,userProfileImage,otherProfileImage,showOtherName,showUserName,otherName,userName;
 
 + (KonotorUIParameters*) sharedInstance
 {
@@ -372,9 +375,18 @@ static KonotorUIParameters* konotorUIParameters=nil;
         konotorUIParameters.otherChatBubble=nil;
         konotorUIParameters.userTextColor=nil;
         konotorUIParameters.userChatBubble=nil;
+        konotorUIParameters.userProfileImage=nil;
+        konotorUIParameters.otherProfileImage=nil;
         
         konotorUIParameters.overlayTransitionStyle=UIModalTransitionStyleCrossDissolve;
         konotorUIParameters.inputHintText=nil;
+        
+        konotorUIParameters.showUserName=NO;
+        konotorUIParameters.showOtherName=NO;
+        
+        konotorUIParameters.otherName=nil;
+        konotorUIParameters.userName=nil;
+
 
     }
     return konotorUIParameters;
